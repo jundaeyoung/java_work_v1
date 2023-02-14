@@ -10,8 +10,7 @@ public class Zealot extends Unit {
 	// 생성자
 	public Zealot(String name) {
 		this.name = name;
-		this.power = 5;
+		this.power = 50;
 		this.hp = 80;
-		this.level=1;
 	}
 }
