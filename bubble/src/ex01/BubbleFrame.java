@@ -59,6 +59,22 @@ public class BubbleFrame extends JFrame {
 				}
 
 			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				switch (e.getKeyCode()) {
+				case KeyEvent.VK_LEFT:
+					// 왼쪽 버튼을 떼면 player는 멈춰야해
+					player.setLeft(false);
+					break;
+
+				case KeyEvent.VK_RIGHT:
+					// 오른쪽 버튼을 떼면 player는 멈춰야해
+					player.setRight(false);
+					break;
+				}
+			}
+
 		});
 
 	}
