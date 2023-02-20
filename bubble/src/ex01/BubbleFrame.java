@@ -1,12 +1,14 @@
 package ex01;
 
-import java.awt.event.KeyAdapter;
+import java.awt.event.KeyAdapter; 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import ex01.BackgroundPlayerService;
 
 public class BubbleFrame extends JFrame {
 
@@ -18,6 +20,9 @@ public class BubbleFrame extends JFrame {
 		setInitLayout();
 		addEventListener();
 
+		// player가 메모리에 올라간 상태이다.
+		// 약속 run method 안에 동작을 처리한다.
+		new Thread(new BackgroundPlayerService(player)).start();
 	}
 
 	private void initData() {
@@ -45,10 +50,15 @@ public class BubbleFrame extends JFrame {
 				// 37,38,39,40
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_LEFT:
-					player.left();
+					// 여러번 누르더라도 한번만 추가될수 있도록 코드추가
+					if (player.isLeft() == false && player.isLeftWallCrash() == false) {
+						player.left();
+					}
 					break;
 				case KeyEvent.VK_RIGHT:
-					player.right();
+					if (player.isRight() == false && player.isRightWallCrash() == false) {
+						player.right();
+					}
 					break;
 				case KeyEvent.VK_UP:
 					player.up();

@@ -15,6 +15,10 @@ public class Player extends JLabel implements Moveable {
 	private boolean up;
 	private boolean down;
 
+	// 벽에 충돌한 상태
+	private boolean leftWallCrash;
+	private boolean rightWallCrash;
+
 	// 플레이어의 속도
 	private final int SPEED = 4;
 	private final int JUMPSPEED = 2;
@@ -26,6 +30,47 @@ public class Player extends JLabel implements Moveable {
 
 	public void setRight(boolean right) {
 		this.right = right;
+	}
+
+	public void setUp(boolean up) {
+		this.up = up;
+	}
+
+	public void setDown(boolean down) {
+		this.down = down;
+	}
+
+	public void setLeftWallCrash(boolean leftWallCrash) {
+		this.leftWallCrash = leftWallCrash;
+	}
+
+	public void setRightWallCrash(boolean rightWallCrash) {
+		this.rightWallCrash = rightWallCrash;
+	}
+
+	// getter methods
+	public boolean isUp() {
+		return up;
+	}
+
+	public boolean isDown() {
+		return down;
+	}
+
+	public boolean isLeftWallCrash() {
+		return leftWallCrash;
+	}
+
+	public boolean isRightWallCrash() {
+		return rightWallCrash;
+	}
+
+	public boolean isLeft() {
+		return left;
+	}
+
+	public boolean isRight() {
+		return right;
 	}
 
 	public Player() {
@@ -41,11 +86,12 @@ public class Player extends JLabel implements Moveable {
 		right = false;
 		up = false;
 		down = false;
-
+		leftWallCrash = false;
+		rightWallCrash = false;
 	}
 
 	private void setInitLayout() {
-		x = 55;
+		x = 500;
 		y = 535;
 		// 좌표 기반, 라벨 크기를 지정해야한다.
 		setSize(50, 50);
@@ -128,17 +174,19 @@ public class Player extends JLabel implements Moveable {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				for (int i = 0; i < 130 / JUMPSPEED; i++) {
-					y += JUMPSPEED;
-					setLocation(x, y);
-					try {
-						Thread.sleep(3);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				down = false;
+				while (down) {
+					y = y + JUMPSPEED;
+					setLocation(x, y+10);
+//					try {
+//						Thread.sleep(3);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+					
+					down = false;
+				} // end of while
+
 				// 상태값 다룰 때는 상황이 변하면 초기화 처리를 잘 해야한다.
 			}
 		}).start();
