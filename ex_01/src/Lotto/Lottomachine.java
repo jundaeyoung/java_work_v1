@@ -3,49 +3,48 @@ package Lotto;
 import java.util.Random;
 import java.util.Scanner;
 
-public class LottoNum {
+public class Lottomachine {
 
-		int count = 0;
-		int bonus = 0;
-		Scanner sc = new Scanner(System.in);
+	int count = 0;
+	int bonus = 0;
+	Scanner sc = new Scanner(System.in);
 
-		Random rd = new Random();
-		int[] userArr = new int[6];
-		int[] lottoArr = new int[7];
+	Random rd = new Random();
+	int[] userArr = new int[6];
+	int[] lottoArr = new int[7];
 
-		public void userInput() {
-			// 사용자 입력
-			for (int userInput = 0; userInput < 6; userInput++) {
-				System.out.print("로또 번호를 입력 해주세요.");
-				int userNum = sc.nextInt();
-				userArr[userInput] = userNum;
-				// 범위밖의 값 입력
-				if (userArr[userInput] <= 0 || userArr[userInput] > 45) {
-					System.out.println("잘못된 번호입니다.");
+	public void userInput() {
+		// 사용자 입력
+		for (int userInput = 0; userInput < 6; userInput++) {
+			System.out.print("로또 번호를 입력 해주세요.");
+			int userNum = sc.nextInt();
+			userArr[userInput] = userNum;
+			// 범위밖의 값 입력
+			if (userArr[userInput] <= 0 || userArr[userInput] > 45) {
+				System.out.println("잘못된 번호입니다.");
+				userInput--;
+			}
+			// 중복값 제거
+			for (int i = 0; i < userInput; i++) {
+				if (userArr[userInput] == userArr[i]) {
+					System.out.println("중복된 값입니다. 다시 입력해주세요.");
 					userInput--;
 				}
-				// 중복값 제거
-				for (int i = 0; i < userInput; i++) {
-					if (userArr[userInput] == userArr[i]) {
-						System.out.println("중복된 값입니다. 다시 입력해주세요.");
-						userInput--;
-					}
-					// 오름차순 정렬
-					if (userArr[userInput] < userArr[i]) {
-						int temp = userArr[userInput];
-						userArr[userInput] = userArr[i];
-						userArr[i] = temp;
-					}
+				// 오름차순 정렬
+				if (userArr[userInput] < userArr[i]) {
+					int temp = userArr[userInput];
+					userArr[userInput] = userArr[i];
+					userArr[i] = temp;
 				}
-				
-				// 사용자 입력 결과값
-				System.out.println(userNum);
 			}
+
+			// 사용자 입력 결과값
+			System.out.println(userNum);
 		}
-		
-		public void machineNum() {
-			
-		
+	}
+
+	public void machineNum() {
+
 		// 머신 추첨
 		lottoArr[6] = rd.nextInt(45) + 1;
 		for (int i = 0; i < 6; i++) {
@@ -85,8 +84,9 @@ public class LottoNum {
 
 			}
 		}
-		}
-		public void lottoResult() {
+	}
+
+	public void lottoResult() {
 		System.out.println();
 		System.out.print(" 당첨 로또 번호 : ");
 		for (int i = 0; i < 6; i++) {
@@ -124,5 +124,5 @@ public class LottoNum {
 		} else if (count <= 2) {
 			System.out.println("아쉽지만 낙첨입니다.");
 		}
-		}
+	}
 }

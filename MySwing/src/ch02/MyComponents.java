@@ -43,7 +43,7 @@ public class MyComponents extends JFrame {
 		
 		
 		setLayout(new FlowLayout());
-		setVisible(true);;;
+		setVisible(true);
 		
 	}
 	public static void main(String[] args) {
