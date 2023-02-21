@@ -1,4 +1,4 @@
-package ex01;
+package ex05;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
-import ex01.Player;
 
 // 메인 쓰레드는
 // 메인 화면에 그림 그려주고 있다. (키보드 이벤트 리스너도 받고 있음) 바쁨
@@ -40,6 +38,8 @@ public class BackgroundPlayerService implements Runnable {
 			// 기준 왼쪽
 			Color leftColor = new Color(image.getRGB(player.getX() + 6, player.getY()));
 			Color rightColor = new Color(image.getRGB(player.getX() + 58, player.getY()));
+			Color bottomColor = new Color(image.getRGB(player.getX() + 7, player.getY() + 50));
+			Color highColor = new Color(image.getRGB(player.getX()+7, player.getY() - 30));
 
 			// 바닥 충돌 감지 기능
 //			Color bottomColorLeft = new Color(image.getRGB(player.getX() + 10, player.getY()+60));
@@ -51,9 +51,12 @@ public class BackgroundPlayerService implements Runnable {
 			if (bottomColorLeft + bottomColorRight != -2) {
 				System.out.println("여기는 바닥입니다.");
 				player.setDown(false);
+				player.setAir(false);
 			} else {
 				if (player.isUp() == false && player.isDown() == false) {
 					player.down();
+					
+
 				}
 			}
 
@@ -66,9 +69,20 @@ public class BackgroundPlayerService implements Runnable {
 				System.out.println("현재 상태는 오른쪽 벽에 충돌 했어요");// 오른쪽벽에 충돌함 !
 				player.setRight(false);
 				player.setRightWallCrash(true);
+			} else if (bottomColor.getRed() == 255 && bottomColor.getGreen() == 0 && bottomColor.getBlue() == 0) {
+				System.out.println("현재 상태는 바닥벽에 충돌했어요");
+				player.setDown(false);
+				player.setDownWallCrash(true);
+				player.setAir(false);
+
+			} else if (highColor.getRed() == 255 && highColor.getGreen() == 0 && highColor.getBlue() == 0) {
+				player.setUp(false);
+				player.setUpWallCrash(true);
 			} else {
 				player.setLeftWallCrash(false);
 				player.setRightWallCrash(false);
+				player.setUpWallCrash(false);
+				player.setDownWallCrash(false);
 
 			}
 			try {

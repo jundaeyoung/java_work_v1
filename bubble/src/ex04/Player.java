@@ -1,4 +1,4 @@
-package ex01;
+package ex04;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -7,17 +7,24 @@ public class Player extends JLabel implements Moveable {
 
 	private int x;
 	private int y;
+	private int bubbleX;
+	private int bubbleY;
 	private ImageIcon playerR, playerL;
+	private ImageIcon bubble;
 
 	// 플레이어에 현재 움직임 상태를 기록
 	private boolean left;
 	private boolean right;
 	private boolean up;
 	private boolean down;
+	private boolean air;
+	private boolean attack;
 
 	// 벽에 충돌한 상태
 	private boolean leftWallCrash;
 	private boolean rightWallCrash;
+	private boolean upWallCrash;
+	private boolean downWallCrash;
 
 	// 플레이어의 속도
 	private final int SPEED = 4;
@@ -26,6 +33,10 @@ public class Player extends JLabel implements Moveable {
 	// setter methods
 	public void setLeft(boolean left) {
 		this.left = left;
+	}
+
+	public void setAir(boolean air) {
+		this.air = air;
 	}
 
 	public void setRight(boolean right) {
@@ -48,13 +59,33 @@ public class Player extends JLabel implements Moveable {
 		this.rightWallCrash = rightWallCrash;
 	}
 
+	public void setUpWallCrash(boolean upWallCrash) {
+		this.upWallCrash = upWallCrash;
+	}
+
+	public void setDownWallCrash(boolean downWallCrash) {
+		this.downWallCrash = downWallCrash;
+	}
+
 	// getter methods
 	public boolean isUp() {
 		return up;
 	}
 
+	public boolean isAir() {
+		return air;
+	}
+
 	public boolean isDown() {
 		return down;
+	}
+
+	public boolean isUpWallCrash() {
+		return upWallCrash;
+	}
+
+	public boolean isDownWallCrash() {
+		return downWallCrash;
 	}
 
 	public boolean isLeftWallCrash() {
@@ -81,6 +112,7 @@ public class Player extends JLabel implements Moveable {
 	private void initData() {
 		playerR = new ImageIcon("images/playerR.png");
 		playerL = new ImageIcon("images/playerL.png");
+		bubble = new ImageIcon("images/bubble.png");
 
 		left = false;
 		right = false;
@@ -88,11 +120,17 @@ public class Player extends JLabel implements Moveable {
 		down = false;
 		leftWallCrash = false;
 		rightWallCrash = false;
+		upWallCrash = false;
+		downWallCrash = false;
+		air = false;
+
 	}
 
 	private void setInitLayout() {
 		x = 500;
 		y = 535;
+		bubbleX = x;
+		bubbleY = y;
 		// 좌표 기반, 라벨 크기를 지정해야한다.
 		setSize(50, 50);
 		setLocation(x, y);
@@ -149,6 +187,7 @@ public class Player extends JLabel implements Moveable {
 	public void up() {
 		System.out.println("점프 !!");
 		up = true;
+		air = true;
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -193,6 +232,25 @@ public class Player extends JLabel implements Moveable {
 				} // end of while
 
 				// 상태값 다룰 때는 상황이 변하면 초기화 처리를 잘 해야한다.
+			}
+		}).start();
+	}
+
+	public void space() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (attack) {
+					System.out.println("space");
+					setIcon(bubble);
+					bubbleX += 10;
+					setLocation(bubbleX, bubbleY);
+					try {
+						Thread.sleep(3);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}).start();
 	}
