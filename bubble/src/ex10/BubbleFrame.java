@@ -1,4 +1,4 @@
-package ex09;
+package ex10;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -25,6 +25,14 @@ public class BubbleFrame extends JFrame {
 		// player가 메모리에 올라간 상태이다.
 		// 약속 run method 안에 동작을 처리한다.
 		new Thread(new BackgroundPlayerService(player)).start();
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public Enemy getEnemy() {
+		return enemy;
 	}
 
 	private void initData() {
