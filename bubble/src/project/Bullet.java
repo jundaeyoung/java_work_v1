@@ -12,9 +12,18 @@ public class Bullet extends JLabel implements Moveable {
 
 	private int state;
 	private ImageIcon bullet;
+	private ImageIcon boom;
 
 	private AirplaneFrame mContext;
 	private BackgroundBulletService backgroundBulletService;
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
 
 	public Bullet(AirplaneFrame mContext) {
 		this.mContext = mContext;
@@ -25,14 +34,15 @@ public class Bullet extends JLabel implements Moveable {
 	}
 
 	public void initData() {
-		bullet = new ImageIcon("imagesProject/bullet.png");
+		bullet = new ImageIcon("imagesProject/PlayerBullet1.png");
+		boom = new ImageIcon("imagesProject/explosion.gif");
 		state = 0;
 		up = false;
 
 	}
 
 	public void setInitLayout() {
-		x = mContext.getPlayer().getX() - 10;
+		x = mContext.getPlayer().getX() + 20;
 		y = mContext.getPlayer().getY();
 		setIcon(bullet);
 		setSize(80, 60);
@@ -45,6 +55,15 @@ public class Bullet extends JLabel implements Moveable {
 				up();
 			}
 		}).start();
+	}
+
+	public void crash() {
+		mContext.getEnemy().setStatus(1);
+		setIcon(boom);
+		state = 1;
+		mContext.remove(mContext.getEnemy());
+		mContext.repaint();
+		
 	}
 
 	@Override
@@ -63,7 +82,11 @@ public class Bullet extends JLabel implements Moveable {
 		while (true) {
 			y--;
 			setLocation(x, y);
-
+			if (Math.abs(x - mContext.getEnemy().getX()) < 10 && Math.abs(y - mContext.getEnemy().getY()) < 50) {
+				if (mContext.getEnemy().getStatus() == 0) {
+					crash();
+				}
+			}
 			try {
 				Thread.sleep(3);
 			} catch (InterruptedException e) {

@@ -5,14 +5,18 @@ import javax.swing.JLabel;
 
 public class Player extends JLabel implements Moveable {
 
+	PlayerWay playerWay;
 	AirplaneFrame mContext;
 
 	private int x;
 	private int y;
 	private int bulletX;
 	private int bulletY;
+	private int status;
 	private ImageIcon player;
 	private ImageIcon bullet;
+	private ImageIcon gost;
+	private int life = 3;
 
 	// 플레이어의 현재 움직임 상태 기록
 	private boolean left;
@@ -29,6 +33,22 @@ public class Player extends JLabel implements Moveable {
 
 	// 플레이어의 속도
 	private final int SPEED = 4;
+
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife(int life) {
+		life = life;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public AirplaneFrame getmContext() {
 		return mContext;
@@ -146,7 +166,9 @@ public class Player extends JLabel implements Moveable {
 	}
 
 	public void initData() {
-		player = new ImageIcon("imagesProject/airplane.png");
+		player = new ImageIcon("imagesProject/BigPlane2.png");
+		gost = new ImageIcon("imagesProject/PLANE2무적.png");
+		playerWay = PlayerWay.RIGHT;
 	}
 
 	public void setInitLayout() {
@@ -160,7 +182,7 @@ public class Player extends JLabel implements Moveable {
 	@Override
 	public void left() {
 		left = true;
-
+		playerWay  = PlayerWay.LEFT;
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -181,6 +203,7 @@ public class Player extends JLabel implements Moveable {
 
 	@Override
 	public void right() {
+		playerWay  = PlayerWay.RIGHT;
 		right = true;
 
 		new Thread(new Runnable() {
@@ -203,6 +226,7 @@ public class Player extends JLabel implements Moveable {
 
 	@Override
 	public void up() {
+		playerWay  = PlayerWay.UP;
 		up = true;
 
 		new Thread(new Runnable() {
@@ -226,6 +250,7 @@ public class Player extends JLabel implements Moveable {
 
 	@Override
 	public void down() {
+		playerWay  = PlayerWay.DOWN;
 		down = true;
 
 		new Thread(new Runnable() {
@@ -263,6 +288,18 @@ public class Player extends JLabel implements Moveable {
 				}
 			}
 		}).start();
+	}
+
+	public void beAttack() {
+		life = life-1;
+		if (life == 2) {
+			mContext.remove(mContext.getLife2());
+		} else if (life == 1) {
+			mContext.remove(mContext.getLife1());
+		} else if (life == 0) {
+			mContext.remove(mContext.getLife());
+			setIcon(gost);
+		}
 	}
 
 	public void attack() {

@@ -2,6 +2,7 @@ package project;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -14,9 +15,43 @@ public class AirplaneFrame extends JFrame {
 	private JLabel backgroundMap;
 	private Player player;
 	private Enemy enemy;
+	private Life life;
+	private Life life1;
+	private Life life2;
 
 	
-	
+	public Life getLife1() {
+		return life1;
+	}
+
+	public void setLife1(Life life1) {
+		this.life1 = life1;
+	}
+
+	public Life getLife2() {
+		return life2;
+	}
+
+	public void setLife2(Life life2) {
+		this.life2 = life2;
+	}
+
+	public Life getLife() {
+		return life;
+	}
+
+	public void setLife(Life life) {
+		this.life = life;
+	}
+
+	public Enemy getEnemy() {
+		return enemy;
+	}
+
+	public void setEnemy(Enemy enemy) {
+		this.enemy = enemy;
+	}
+
 	public AirplaneFrame getmContext() {
 		return mContext;
 	}
@@ -58,6 +93,9 @@ public class AirplaneFrame extends JFrame {
 
 		player = new Player(mContext);
 		enemy = new Enemy(mContext);
+		life = new Life(mContext);
+		life1 = new Life(mContext);
+		life2 = new Life(mContext);
 	}
 
 	private void setInitLayout() {
@@ -68,6 +106,12 @@ public class AirplaneFrame extends JFrame {
 
 		add(player);
 		add(enemy);
+		add(life);
+		life.setLocation(20, 10);
+		add(life1);
+		life1.setLocation(60, 10);
+		add(life2);
+		life2.setLocation(100, 10);
 	}
 
 	private void addEventListener() {
@@ -117,11 +161,11 @@ public class AirplaneFrame extends JFrame {
 					// 오른쪽 버튼을 떼면 player는 멈춰야해
 					player.setRight(false);
 					break;
-					
+
 				case KeyEvent.VK_UP:
 					player.setUp(false);
 					break;
-					
+
 				case KeyEvent.VK_DOWN:
 					player.setDown(false);
 					break;
@@ -130,8 +174,8 @@ public class AirplaneFrame extends JFrame {
 
 		});
 
-	
 	}
+
 	public static void main(String[] args) {
 		new AirplaneFrame();
 	}
