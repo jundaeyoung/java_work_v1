@@ -292,12 +292,18 @@ public class Player extends JLabel implements Moveable {
 
 	public void beAttack() {
 		life = life-1;
+		System.out.println("추락합니다.");
 		if (life == 2) {
-			mContext.remove(mContext.getLife2());
+			mContext.getLife2().setIcon(null);
+			setIcon(gost);
+	
 		} else if (life == 1) {
-			mContext.remove(mContext.getLife1());
-		} else if (life == 0) {
-			mContext.remove(mContext.getLife());
+			mContext.getLife1().setIcon(null);
+			System.out.println("2번째 추락");
+			setIcon(gost);
+		} else {
+			mContext.getLife().setIcon(null);
+			System.out.println("3번째 추락");
 			setIcon(gost);
 		}
 	}

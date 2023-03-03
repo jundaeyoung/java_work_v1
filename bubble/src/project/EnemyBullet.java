@@ -11,9 +11,11 @@ public class EnemyBullet extends JLabel implements Moveable {
 	private boolean down;
 
 	private int state;
+	private int attackCount;
+
 	private ImageIcon enemyBullet;
 	private ImageIcon boom;
-	private ImageIcon gost;
+	private ImageIcon player;
 
 	private AirplaneFrame mContext;
 	private BackgroundEnemyBulletService backgroundenemyBulletService;
@@ -29,7 +31,11 @@ public class EnemyBullet extends JLabel implements Moveable {
 	public void initData() {
 		enemyBullet = new ImageIcon("imagesProject/bullet4.png");
 		boom = new ImageIcon("imagesProject/explosion.gif");
+		player = new ImageIcon("imagesProject/BigPlane2.png");
 		state = 0;
+		// 1로 계속 초기화
+		attackCount = 1;
+		mContext.getPlayer().setIcon(player);
 
 	}
 
@@ -50,23 +56,21 @@ public class EnemyBullet extends JLabel implements Moveable {
 	}
 
 	public void crash() {
-		Life life = new Life(mContext);
-		Player player = new Player(mContext);
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		player.beAttack();
-		mContext.repaint();
-		System.out.println("추락합니다.");
-		if (mContext.getPlayer().getLife() == 0) {
-			setIcon(boom);
-			state = 1;
-			mContext.remove(mContext.getPlayer());
+//		Player player = new Player(mContext);
+
+		if (attackCount == 1) {
+			attackCount--;
+			mContext.getPlayer().beAttack();
 			mContext.repaint();
+
+			if (mContext.getPlayer().getLife() == 0) {
+				setIcon(boom);
+				state = 1;
+				mContext.remove(mContext.getPlayer());
+				mContext.repaint();
+			}
 		}
+
 	}
 
 	@Override
@@ -99,7 +103,9 @@ public class EnemyBullet extends JLabel implements Moveable {
 				Thread.sleep(3);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+
 			}
+
 		}
 	}
 
