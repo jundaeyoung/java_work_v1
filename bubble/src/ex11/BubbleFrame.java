@@ -21,6 +21,8 @@ public class BubbleFrame extends JFrame {
 		initData();
 		setInitLayout();
 		addEventListener();
+		
+		
 
 		// player가 메모리에 올라간 상태이다.
 		// 약속 run method 안에 동작을 처리한다.
