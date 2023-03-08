@@ -46,7 +46,6 @@ public class DBClient {
 		if(conn!=null) {
 			try {
 				conn.close();
-				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
