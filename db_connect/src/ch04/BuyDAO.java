@@ -22,7 +22,7 @@ public class BuyDAO implements IBuyDAO {
 	@Override
 	public ArrayList<BuyDTO> select() {
 		ArrayList<BuyDTO> list = new ArrayList<>();
-		Connection conn = dbClient.getconConnection();
+		Connection conn = dbClient.getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;
 
@@ -52,7 +52,7 @@ public class BuyDAO implements IBuyDAO {
 				+ "VALUES ('%s','%s',%d,%d )";
 		String sql = String.format(sqlFormat, dto.getUsername(), dto.getProdName(), dto.getPrice(), dto.getAmount());
 
-		Connection conn = dbClient.getconConnection();
+		Connection conn = dbClient.getConnection();
 		Statement stmt = null;
 		int resultRowCount = 0;
 		try {
@@ -75,14 +75,14 @@ public class BuyDAO implements IBuyDAO {
 	@Override
 	public int update(BuyDTO dto, String targetBuyName) {
 		String sqlFormat = "UPDATE buyTBL "
-				+ "SET price =%d "
+				+ "SET prodName =%d "
 				+ "WHERE username ='%s' ";
 		
-		String sql = String.format(sqlFormat, dto.getPrice(),dto.getUsername());
+		String sql = String.format(sqlFormat, dto.getPrice(),targetBuyName);
 		
 		int resultRow = 0 ;
 		
-		Connection conn = dbClient.getconConnection();
+		Connection conn = dbClient.getConnection();
 		try {
 			Statement stmt = conn.createStatement();
 			resultRow = stmt.executeUpdate(sql);
@@ -100,7 +100,7 @@ public class BuyDAO implements IBuyDAO {
 				+ "WHERE username = '%s' ";
 		String sql = String.format(sqlFormat, username);
 		
-		Connection conn = dbClient.getconConnection();
+		Connection conn = dbClient.getConnection();
 		Statement stmt = null;
 		try {
 			stmt = conn.createStatement();

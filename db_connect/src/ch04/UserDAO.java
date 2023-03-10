@@ -21,7 +21,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public ArrayList<UserDTO> select() {
 		ArrayList<UserDTO> list = new ArrayList<>();
-		Connection conn = dbClient.getconConnection();
+		Connection conn = dbClient.getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -61,7 +61,7 @@ public class UserDAO implements IUserDAO {
 		String sql = String.format(sqlFormat, dto.getUsername(),dto.getBirthYear(),
 											  dto.getAddr(),dto.getMobile());
 		
-		Connection conn = dbClient.getconConnection();
+		Connection conn = dbClient.getConnection();
 		Statement stmt = null;
 		int resultRowCount = 0;
 		try {
@@ -99,7 +99,7 @@ public class UserDAO implements IUserDAO {
 		int resultRow = 0;
 		
 		try(
-			Connection conn = dbClient.getconConnection();
+			Connection conn = dbClient.getConnection();
 			Statement stmt = conn.createStatement();
 			){			
 				resultRow = stmt.executeUpdate(sql);		
@@ -116,7 +116,7 @@ public class UserDAO implements IUserDAO {
 				+ "WHERE username = '%s' ";
 		String sql = String.format(sqlFormat, username);
 		
-		Connection conn = dbClient.getconConnection();
+		Connection conn = dbClient.getConnection();
 		Statement stmt = null;
 		try {
 			stmt = conn.createStatement();

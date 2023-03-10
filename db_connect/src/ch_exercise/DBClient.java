@@ -1,4 +1,4 @@
-package ch04;
+package ch_exercise;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
