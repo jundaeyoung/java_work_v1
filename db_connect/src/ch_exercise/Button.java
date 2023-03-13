@@ -21,6 +21,7 @@ public class Button extends JFrame implements ActionListener {
 
 	private JButton button1;
 	private JButton button2;
+	private JButton button3;
 	private JLabel label; // 글자를 넣어서 화면에 띄울수 있다
 	private JTextField textField1; // 사용자 한테 입력 값을 받을 수 있는 컴포넌트
 	private JTextField textField2; // 사용자 한테 입력 값을 받을 수 있는 컴포넌트
@@ -43,11 +44,12 @@ public class Button extends JFrame implements ActionListener {
 		setSize(800, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		textField1 = new JTextField("입력", 20);
-		textField2 = new JTextField("입력", 20);
-		textField3 = new JTextField("입력", 20);
+		textField1 = new JTextField("", 20);
+		textField2 = new JTextField("", 20);
+		textField3 = new JTextField("", 20);
 		button1 = new JButton("SELECT");
 		button2 = new JButton("INSERT");
+		button3 = new JButton("DELETE");
 		label = new JLabel("글자를 적는 컴포넌트");
 		text = new JTextArea("result");
 //		jPasswordField = new JPasswordField("비번입력", 10);
@@ -60,6 +62,7 @@ public class Button extends JFrame implements ActionListener {
 		add(textField3);
 		add(button1);
 		add(button2);
+		add(button3);
 		add(label);
 		setLayout(new FlowLayout());
 		setVisible(true);
@@ -71,6 +74,7 @@ public class Button extends JFrame implements ActionListener {
 		// ActionListener 타입으로도 바라볼수 있다.
 		button1.addActionListener(this);
 		button2.addActionListener(this);
+		button3.addActionListener(this);
 
 	}
 
@@ -84,7 +88,7 @@ public class Button extends JFrame implements ActionListener {
 		text.setText("");
 
 		// select 확인
-		ArrayList<UserDTO> list = userDAO.select(textField1.getText());
+		ArrayList<UserDTO> list = userDAO.select(textField2.getText());
 		if (e.getSource() == this.button1) {
 
 			for (int i = 0; i < list.size(); i++) {
@@ -95,14 +99,16 @@ public class Button extends JFrame implements ActionListener {
 				text.append(list.get(i).getEmail() + "\t");
 				System.out.println();
 			}
-		} else {
-			text.append("조회할 대상이 없습니다.");
-		}
-		
-			
+		} 
+		// insert
 		if (e.getSource() == this.button2) {
 			UserDTO dto = new UserDTO(textField1.getText(),textField2.getText(),textField3.getText());
 			userDAO.insert(dto);
+		}
+		//delete
+		if (e.getSource() == this.button3) {
+			UserDTO dto = new UserDTO(textField1.getText(),textField2.getText(),textField3.getText());
+			userDAO.delete(dto);
 		}
 	}
 

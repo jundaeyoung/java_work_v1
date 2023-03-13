@@ -54,46 +54,6 @@ public class UserDAO implements IUserDAO{
 		}
 		return list;
 	}
-//	@Override
-//	public int insert(UserDTO dto) {
-//		String sqlFormat = " INSERT INTO user "
-//				+ " VALUES "
-//				+ "	(?,?,?) ";
-//		String sql = String.format(sqlFormat,dto.getId(),dto.getName(),dto.getEmail());
-//		Connection conn = dbClient.getConnection();
-//		Statement stmt = null;
-//		int resultRowCount = 0;
-//		try {
-//			stmt = conn.createStatement();
-//			resultRowCount = stmt.executeUpdate(sql);
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}finally {
-//			try {
-//				conn.close();
-//				stmt.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//				System.err.println("잘 확인해주세요.");
-//
-//			}
-//			
-//		}
-		
-		
-//		return resultRowCount;
-//	}
-	@Override
-	public int update(UserDTO dto, String targetUser) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public int delete(String username) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	@Override
 	public int insert(UserDTO dto) {
 		
@@ -121,6 +81,37 @@ public class UserDAO implements IUserDAO{
 		}
 		
 		return resultRowCount;
+	}
+
+	@Override
+	public int update(UserDTO dto, String targetUser) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int delete(UserDTO dto) {
+		String sql = "DELETE FROM user "
+				+ "WHERE name = ? ";
+		
+		Connection conn = dbClient.getConnection();
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getName());
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return 0;
 	}
 
 

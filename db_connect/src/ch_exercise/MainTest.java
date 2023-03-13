@@ -15,5 +15,8 @@ public class MainTest {
 			System.out.print(list.get(i).getEmail() + "\t");
 			System.out.println();
 		}
+		
+		// DELETE 확인
+//		userDAO.delete();
 	}
 }
