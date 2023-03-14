@@ -65,8 +65,27 @@ public class BlogDAO implements IBlogDAO {
 	}
 
 	@Override
-	public void update() {
-
+	public void update(BlogDTO dto,String targetBuyName) {
+		String query = " update board "
+				+ " set title = '두번째 게시글' "
+				+ " WHERE id = ? ";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setString(2, dto.getContent());
+			pstmt.setInt(3, dto.getUserId());
+			rs = pstmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override

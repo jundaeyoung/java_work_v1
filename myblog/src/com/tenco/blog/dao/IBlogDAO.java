@@ -6,6 +6,6 @@ public interface IBlogDAO {
 
 	int save(String title, String content, int userId);
 	BlogDTO select(int boardId);
-	void update();
+	void update(BlogDTO dto,String targetBuyName);
 	void delete(int boardId);
 }
